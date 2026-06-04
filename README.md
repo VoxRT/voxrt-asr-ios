@@ -14,9 +14,9 @@ Streaming on-device speech recognition on the **VoxRT** custom inference runtime
 
 VoxRT is a from-scratch inference runtime for on-device speech models. No ONNX Runtime, no PyTorch Mobile, no LiteRT — a custom Rust core sized and tuned for streaming voice workloads on phone-class hardware.
 
-`VoxrtAsr` is the streaming-ASR product on that runtime, alongside the free [`VoxrtSilero`](https://github.com/VoxRT/voxrt-silero-ios) VAD demo. Both share the same runtime crate and the same NEON kernel set. The runtime is the product; the models are what it runs.
+`VoxrtAsr` is the streaming-ASR product on that runtime, alongside [`VoxrtSilero`](https://github.com/VoxRT/voxrt-silero-ios) (VAD) and [`VoxrtWakeWord`](https://github.com/VoxRT/voxrt-wake-word-ios) (always-on wake-phrase detection). All three share the same runtime crate and the same NEON kernel set. The runtime is the product; the models are what it runs.
 
-Commercial wake-word / KWS / domain-specific ASR models built on the same runtime live at [voxrt.com](https://voxrt.com).
+Commercial custom-phrase wake-word / KWS / domain-specific ASR models built on the same runtime live at [voxrt.com](https://voxrt.com).
 
 ## Performance
 
@@ -62,7 +62,7 @@ The model weights are NOT bundled — you fetch them once from
 https://github.com/VoxRT/voxrt-asr-models/releases/download/v0.1.2/streaming_medium_pc.vxrt
 ```
 
-SHA-256: `93416c104937ee28b4d69f34ce3f858c2d536bae8eddb25f3bda204b7f9fdec8`
+SHA-256: `0d723e429157a8a8cb58739a1f090574f2f23db311ca7916b43411f5f727c79c`
 
 You decide where it lives. Three common patterns:
 
@@ -256,4 +256,5 @@ The compiled `VoxrtAsrNative.xcframework` lives on the GitHub Release page for t
 - Android counterpart: [voxrt-asr-android](https://github.com/VoxRT/voxrt-asr-android)
 - ASR model weights & versions: [voxrt-asr-models](https://github.com/VoxRT/voxrt-asr-models)
 - VAD companion: [voxrt-silero-ios](https://github.com/VoxRT/voxrt-silero-ios)
+- Wake-word companion (iOS): [voxrt-wake-word-ios](https://github.com/VoxRT/voxrt-wake-word-ios) · [models](https://github.com/VoxRT/voxrt-wake-word-models)
 - Bugs / questions: open an issue on this repo
