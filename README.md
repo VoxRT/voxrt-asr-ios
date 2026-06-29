@@ -28,6 +28,23 @@ Measured at ship time, `arm64` device build, post-warmup, RTF = wall-time-per-ch
 
 At RTF ≈ 0.10 you've got ~90 % of one core free during live transcription. CTC mode is ~15 % cheaper per chunk than RNN-T at the cost of marginally lower accuracy (CTC: 4.895 % WER on LibriSpeech test-clean vs 3.267 % for RNN-T).
 
+## How it compares
+
+VoxrtAsr targets the same on-device streaming-ASR slot as Picovoice Cheetah and the various Whisper.cpp deployments:
+
+| | **VoxrtAsr (RNN-T)** | Picovoice Cheetah | Whisper.cpp base.en |
+|---|---|---|---|
+| WER on LibriSpeech test-clean | **3.27 %** | 5.4 % (vendor benchmark) | ~4.4 % (upstream Whisper paper) |
+| Mobile RTF disclosed | ✅ measured on Snapdragon 662 + iPhone | ❌ desktop Ryzen + Raspberry Pi Zero only | ❌ iPhone 13 demo video only |
+| Streaming granularity | 80 ms cache-aware chunk | 590 ms word emission latency | chunked (variable) |
+| Model file | ~61 MB fp16 (.vxrt) | 34 MB | 142 MiB tiny.en · 466 MiB small.en |
+| Runtime memory | ~150 MB | not published | ~388 MB base.en · ~852 MB small.en |
+| License | Runtime MIT + weights CC-BY-4.0 (NeMo upstream) | Commercial freemium (paid tier opaque) | MIT runtime + OpenAI weight terms (separate due diligence) |
+
+Where we win unambiguously: published WER on LibriSpeech test-clean (3.27 % vs Cheetah 5.4 % vs Whisper base.en ~4.4 %), measured cheap-Android RTF (no other vendor publishes one), and streaming chunk granularity (80 ms vs Cheetah's 590 ms word emission latency). Cheetah has a smaller model file (34 MB vs our 61 MB); we have a more accurate model with disclosed mobile speed.
+
+Full sourced analysis: [voxrt.com](https://voxrt.com).
+
 ## Binary footprint
 
 - Swift wrapper source: ~20 KB total
