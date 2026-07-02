@@ -39,7 +39,7 @@ VoxrtAsr targets the same on-device streaming-ASR slot as Picovoice Cheetah and 
 | Streaming granularity | 80 ms cache-aware chunk | 590 ms word emission latency | chunked (variable) |
 | Model file | ~61 MB fp16 (.vxrt) | 34 MB | 142 MiB tiny.en · 466 MiB small.en |
 | Runtime memory | ~150 MB | not published | ~388 MB base.en · ~852 MB small.en |
-| License | Runtime MIT + weights CC-BY-4.0 (NeMo upstream) | Commercial freemium (paid tier opaque) | MIT runtime + OpenAI weight terms (separate due diligence) |
+| License | Apache-2.0 wrapper + proprietary runtime + CC-BY-4.0 weights (NVIDIA NeMo) | Commercial freemium (paid tier opaque) | MIT runtime + OpenAI weight terms (separate due diligence) |
 
 Where we win unambiguously: published WER on LibriSpeech test-clean (3.27 % vs Cheetah 5.4 % vs Whisper base.en ~4.4 %), measured cheap-Android RTF (no other vendor publishes one), and streaming chunk granularity (80 ms vs Cheetah's 590 ms word emission latency). Cheetah has a smaller model file (34 MB vs our 61 MB); we have a more accurate model with disclosed mobile speed.
 
@@ -225,7 +225,7 @@ iOS requires a usage-description string for microphone access. Add to your **app
 
 **Recommended: RNN-T** — higher accuracy, modest extra cost. This is the SDK default; you only need to pass an explicit decoder constant if you specifically want CTC.
 
-| Decoder | Constant | WER on LibriSpeech-500 | Per-chunk cost | When to use |
+| Decoder | Constant | WER on test-clean (500-utterance subset) | Per-chunk cost | When to use |
 | ------- | -------- | ----------------------: | --------------: | ----------- |
 | **RNN-T** ★ | `.rnnt` | **3.267 %** | ~50 ms | **Recommended default.** Higher accuracy. LSTM state survives chunk boundaries. |
 | CTC | `.ctc` | 4.895 % | ~5 ms | Battery-constrained long sessions, or background transcription where the ~1.6 % WER hit is acceptable. |
